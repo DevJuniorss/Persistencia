@@ -28,25 +28,4 @@ id,name,price
 27,Pão de Forma Integral,10.5
 28,Arroz Integral 1kg,25.9
 29,Feijão Preto 1kg,10.2
-30,Molho de Tomate 340g,4.1
-31,Ketchup 1kg,12.3
-32,Mostarda 200g,5.6
-33,Maionese 500g,8.9
-34,Sabão em Pó 1kg,14.8
-35,Detergente Líquido 500ml,2.9
-36,Amaciante de Roupas 2L,16.4
-37,Desinfetante Floral 2L,11.7
-38,Papel Higiênico 12un,19.9
-39,Shampoo 400ml,17.5
-40,Condicionador 400ml,18.2
-41,Sabonete em Barra,3.5
-42,Creme Dental 90g,6.4
-43,Escova de Dentes,8.0
-44,Desodorante Aerosol 150ml,15.9
-45,Cerveja IPA 600ml,15.5
-46,Whisky Jack Daniel's 1L,189.9
-47,Vodka Smirnoff 1L,89.9
-48,Gin Tanqueray 750ml,149.9
-49,Rum Bacardi 1L,129.5
-50,Cachaça 51 1L,22.9
-50,Cachaça 51 1L,22.9
+32,maionese,10000.0
