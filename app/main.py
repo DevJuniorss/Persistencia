@@ -49,3 +49,17 @@ async def get_below_average():
 @app.delete("/products/{product_id}")
 async def delete_product(product_id: int):
     return await service.delete_product(product_id)
+
+
+
+# N deu certo 
+
+# @app.get("/products/recent")
+# async def get_recent_products():
+#     """Era para restornar os ultimos 10 produtos adicionados"""
+#     return await service.get_recent_products()
+
+# @app.get("/products/deleted")
+# async def get_recently_deleted():
+#     """Era para resotornar os ultimos 10 itens removidos do estoque"""
+#     return await service.get_recently_deleted()
