@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Product Manager</title>
+  <title>Gerenciador de Produtos</title>
   <style>
     :root{--accent:#007bff;--danger:#dc3545;--bg:#f7f7f7;--card:#ffffff}
     body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);margin:0;padding:24px}
@@ -22,7 +22,7 @@
 </head>
 <body>
   <div class="wrap">
-    <h1>Product Manager</h1>
+    <h1>Gerenciador de Produtos</h1>
     <div class="card">
       <div class="row">
         <input id="name" type="text" placeholder="Nome do produto">
@@ -100,7 +100,6 @@
     }
     el('addBtn').addEventListener('click',async ()=>{
       const name = el('name').value.trim();
-      console.log("dfjuhdfhujiihu");
       
       const price = el('price').value;
       if(!name || price === '') return;
