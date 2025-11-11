@@ -2,6 +2,7 @@ id,name,price
 1,Arroz Agulhinha Tipo 1,23.9
 2,Feijão Carioca,9.75
 3,Macarrão Espaguete,6.4
+4,Azeite de Oliva Extra Virgem,32.5
 5,Açúcar Refinado,5.2
 6,Café Torrado e Moído,18.3
 7,Leite Integral 1L,4.89
@@ -48,4 +49,4 @@ id,name,price
 48,Gin Tanqueray 750ml,149.9
 49,Rum Bacardi 1L,129.5
 50,Cachaça 51 1L,22.9
-5,Sapupara,5.99
+50,Cachaça 51 1L,22.9
