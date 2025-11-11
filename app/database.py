@@ -1,57 +1,52 @@
-import csv 
-import os 
-import fcntl
+import pandas as pd
+import os
+import asyncio
+
 class Database:
     def __init__(self, filename="products.csv"):
         self.filename = filename
-        self.create_file()
+        self.lock = asyncio.Lock()
+        self.last_id_file = "last_id.txt"
+        self.last_id = self._load_last_id()
+        self._create_file()
 
-    def create_file(self):
+    def _create_file(self):
         if not os.path.exists(self.filename):
-            with open(self.filename, 'w') as file:
-                writer = csv.writer(file)
-                writer.writerow(['id', 'name', 'price'])
+            df = pd.DataFrame(columns=["id", "name", "price"])
+            df.to_csv(self.filename, index=False)
 
-    def get_all(self):
-        products = []
-        try:
-            with open(self.filename, 'r') as file:
-                reader = csv.DictReader(file)
-                for row in reader:
-                    products.append({
-                        'id': int(row['id']),
-                        'name': row['name'],
-                        'price': float(row['price'])
-                    })
-        except:
+    def _load_last_id(self):
+        if os.path.exists(self.last_id_file):
+            with open(self.last_id_file, "r") as f:
+                return int(f.read().strip() or 0)
+        return 0
+
+    def _save_last_id(self):
+        with open(self.last_id_file, "w") as f:
+            f.write(str(self.last_id))
+
+    async def get_all(self):
+        if not os.path.exists(self.filename):
             return []
-        return products
+        df = pd.read_csv(self.filename)
+        return df.to_dict(orient="records")
 
-    def get_next_id(self):
-        products = self.get_all()
-        return max((int(p['id']) for p in products), default=0) + 1
+    async def add(self, name, price):
+        async with self.lock:
+            self.last_id += 1
+            self._save_last_id()
 
-    def add(self, name, price):
-        new_id = self.get_next_id()
-        with open(self.filename, 'a') as file:
-            fcntl.flock(file.fileno(), fcntl.LOCK_EX)
-            writer = csv.writer(file)
-            writer.writerow([new_id, name, price])
-            fcntl.flock(file.fileno(), fcntl.LOCK_UN)
-        return {'id': new_id, 'name': name, 'price': price}
+            df = pd.DataFrame([[self.last_id, name, price]], columns=["id", "name", "price"])
+            df.to_csv(self.filename, mode="a", header=not os.path.exists(self.filename) or os.stat(self.filename).st_size == 0, index=False)
+            return {"id": self.last_id, "name": name, "price": price}
 
-    def delete(self, product_id):
-        products = self.get_all()
-        found = any(p['id'] == product_id for p in products)
-
-        if found:
-            new_products = [p for p in products if p['id'] != product_id]
-            with open(self.filename, 'w') as file:
-                fcntl.flock(file.fileno(), fcntl.LOCK_EX)
-                writer = csv.writer(file)
-                writer.writerow(['id', 'name', 'price'])
-                for p in new_products:
-                    writer.writerow([p['id'], p['name'], p['price']])
-                fcntl.flock(file.fileno(), fcntl.LOCK_UN)
+    async def delete(self, product_id):
+        async with self.lock:
+            if not os.path.exists(self.filename):
+                return False
+            df = pd.read_csv(self.filename)
+            new_df = df[df["id"] != product_id]
+            if len(new_df) == len(df):
+                return False
+            new_df.to_csv(self.filename, index=False)
             return True
-        return False
