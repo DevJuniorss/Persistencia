@@ -52,7 +52,7 @@ class ProductService:
             return {"message": "Product deleted"}
         return {"error": "Product not found"}
     
-    
+
     # async def get_recent_products(self):
     #     """10 ultimos adicionados"""
     #     return self.products[-10:]
