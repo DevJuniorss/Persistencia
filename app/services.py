@@ -51,3 +51,12 @@ class ProductService:
         if success:
             return {"message": "Product deleted"}
         return {"error": "Product not found"}
+    
+    
+    # async def get_recent_products(self):
+    #     """10 ultimos adicionados"""
+    #     return self.products[-10:]
+
+    # async def get_recently_deleted(self):
+    #     """10 últimos excluídos"""
+    #     return self.deleted_products[-10:]
